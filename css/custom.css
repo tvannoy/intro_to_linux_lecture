@@ -1,0 +1,22 @@
+.flexbox-container {
+  display: flex;
+  display: -webkit-flex;
+  display: -ms-flex;
+<<<<<<< HEAD
+  align-items: top; }
+=======
+  align-items: top;
+}
+>>>>>>> 3b67fa857819a3e280a7f8ebe6962b6911c8830e
+
+.flexbox-container > div {
+  flex: 1;
+  -webkit-flex: 1;
+<<<<<<< HEAD
+  -ms-flex: 1; }
+=======
+  -ms-flex: 1;
+}
+>>>>>>> 3b67fa857819a3e280a7f8ebe6962b6911c8830e
+
+/*# sourceMappingURL=custom.css.map */
