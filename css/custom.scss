@@ -2,7 +2,8 @@
     display: flex;
     display: -webkit-flex;
     display: -ms-flex;
-    align-items: top;
+    align-items: center;
+    justify-content: center;
 }
 
 .flexbox-container > div {
