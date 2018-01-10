@@ -1,0 +1,20 @@
+cat >> file1 << EOF
+Culpa est in repellat inventore veniam. 
+Id totam dolorem consectetur voluptates ut sint possimus tempora. 
+Dolorem sunt autem quasi enim adipisci. 
+Est et consequatur harum 
+EOF
+
+dmesg | grep ACPI
+
+cat words | tr " " "\n" | sort
+
+ps -aux | grep process_name
+
+alias ll="ls -l"
+alias dog="cat"
+
+export PATH=$PATH:/opt/bin
+
+echo 0 > /sys/class/leds/hps_led0/brightness
+echo 1 > /sys/class/leds/hps_led0/brightness
