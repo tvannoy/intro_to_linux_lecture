@@ -1,3 +1,3 @@
 #!/bin/sh
 
-"screen -xR"
+screen -xR

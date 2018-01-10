@@ -58,16 +58,11 @@
             <section>
                 <h2>What is Linux and who uses it?</h2>
             </section>
-            <section data-markdown>
-                <textarea data-template>
-                    ### What is Linux?
-                    - a family of free and open-source operating systems based on the Linux kernel
-                    - GNU/Linux if you're Richard Stallman or pedantic
-                </textarea>
+            <section data-background-image="images/linux_collage.svg" data-background-size="contain">
             </section>
             <section>
                 <h3>OS Market Share</h3>
-                <div id="all-os_combined-ww-monthly-201612-201712"></div><sub>Source: <a href="http://gs.statcounter.com/os-market-share">StatCounter Global Stats - OS Market Share</a></sub><script type="text/javascript" src="https://www.statcounter.com/js/fusioncharts.js"></script><script type="text/javascript" src="https://gs.statcounter.com/chart.php?all-os_combined-ww-monthly-201612-201712&chartWidth=600"></script>
+                    <img src="images/StatCounter-os_combined-ww-monthly-201612-201712.png" />
             </section>
             <section>
                 <h3>Top 500 Supercomputers</h3>
@@ -141,7 +136,7 @@
             </section>
             <section>
                 <h3>File System Hierarchy</h3>
-                <img src="" />
+                <img src="images/dir_tree.svg" height="80%" style="height:80%;"/>
             </section>
             <section data-markdown>
                 <textarea data-template>
@@ -215,21 +210,37 @@
                     - **pwd** : print current directory
                 </textarea>
             </section>
+            <section>
+                <iframe src="http://localhost:4200/"></iframe>
+            </section>
             <section data-markdown>
                 <textarea data-template>
                     ### working with files and directories
-                    - **touch** : change file timestamps (can be used to create a blank file)
-                    - **cat** : concatenate files and print on stdout
                     - **mkdir** : make a directory
+                    - **rm** : remove a files and directories
                     - **mv** : move files and directories
                     - **cp** : copy files
+                    - **touch** : change file timestamps (can be used to create a blank file)
+                    - **echo** : echo a string to stdout
+                    - **find** : find files and directories
+                </textarea>
+            </section>
+            <section>
+                <iframe src="http://localhost:4200/"></iframe>
+            </section>
+            <section data-markdown>
+                <textarea data-template>
+                    ### data manipulation
+                    - **echo** : echo a string to stdout
+                    - **cat** : concatenate files and print on stdout
                     - **less** : paginate files
                     - **tail** : get end of file
                     - **head** : get beginning of file
-                    - **find** : find files and directories
-                    - **grep** : print lines matching a pattern (global regular expression print)
-                    - **rm** : remove a files and directories
+                    - **grep** : print lines matching a pattern (**g**lobal **r**egular **e**xpression **p**rint)
                 </textarea>
+            </section>
+            <section>
+                <iframe src="http://localhost:4200/"></iframe>
             </section>
             <section data-markdown>
                 <textarea data-template>
@@ -237,6 +248,9 @@
                     - **chown** : change owner
                     - **chmod** : change mode bits
                 </textarea>
+            </section>
+            <section>
+                <iframe src="http://localhost:4200/"></iframe>
             </section>
             <section data-markdown>
                 <textarea data-template>
@@ -247,6 +261,9 @@
                     - **killall** : terminate a process by name
                 </textarea>
             </section>
+            <section>
+                <iframe src="http://localhost:4200/"></iframe>
+            </section>
             <section data-markdown>
                 <textarea data-template>
                     ### viewing logs
@@ -254,6 +271,9 @@
                     - **journalctl** : display systemd journals
                     - cat log files in /var/log
                 </textarea>
+            </section>
+            <section>
+                <iframe src="http://localhost:4200/"></iframe>
             </section>
             <section data-markdown>
                 <textarea data-template>
@@ -266,6 +286,9 @@
                     - **\`command\`** : command substituion. use output of one command in another
                     - **<< EOF**      : read from a string literal, using a here document, until EOF
                 </textarea>
+            </section>
+            <section>
+                <iframe src="http://localhost:4200/"></iframe>
             </section>
             <section data-markdown>
                 <textarea data-template>
@@ -288,6 +311,9 @@
                     ```
                 </textarea>
             </section>
+            <section>
+                <iframe src="http://localhost:4200/"></iframe>
+            </section>
             <section data-markdown>
                 <textarea data-template>
                     ### aliases
@@ -296,6 +322,9 @@
                     alias ll="ls -l"
                     ```
                 </textarea>
+            </section>
+            <section>
+                <iframe src="http://localhost:4200/"></iframe>
             </section>
             <section data-markdown>
                 <textarea data-template>
@@ -313,12 +342,18 @@
                     ```
                 </textarea>
             </section>
+            <section>
+                <iframe src="http://localhost:4200/"></iframe>
+            </section>
             <section data-markdown>
                 <textarea data-template>
                     ### process control
                     - command **&** : run command in the background
                     - command1 **&&** command2 : run command1, then run command2 if command1 exited without error
                 </textarea>
+            </section>
+            <section>
+                <iframe src="http://localhost:4200/"></iframe>
             </section>
             <section data-markdown>
                 <textarea data-template>
@@ -328,6 +363,9 @@
                     	- some tools only have one or the other
                     - man pages
                 </textarea>
+            </section>
+            <section>
+                <iframe src="http://localhost:4200/"></iframe>
             </section>
         </section>
         <section>
@@ -372,6 +410,9 @@
                     echo "I found $NUM_CATDOGS catdogs!"
                     ```
                 </textarea>
+            </section>
+            <section>
+                <iframe src="http://localhost:4200/"></iframe>
             </section>
             <section data-markdown>
                 <textarea data-template>
@@ -457,25 +498,38 @@
                     ```
                 </textarea>
             </section>
+            <section>
+                <iframe src="http://localhost:4200/"></iframe>
+            </section>
         </section>
         <section>
-            <h2>References</h2>
-        </section>
-        <section>
-            <h4>shell scripting</h4>
-            https://arachnoid.com/linux/shell_programming.html
-            http://www.panix.com/~elflord/unix/bash-tute.html
-            http://tldp.org/HOWTO/Bash-Prog-Intro-HOWTO.html
-            https://linuxconfig.org/bash-scripting-tutorial-for-beginners
-            https://en.wikibooks.org/wiki/Bash_Shell_Scripting#Shell_arithmetic
-            http://matt.might.net/articles/bash-by-example/
-            http://tldp.org/LDP/Bash-Beginners-Guide/html/
-        </section>
-        <section>
-            <h4>sysfs and procfs</h4>
-        </section>
-        <section>
-            <h4>Directories</h4>
+            <section>
+                <h2>References</h2>
+            </section>
+            <section>
+                <h4>shell scripting</h4>
+                https://arachnoid.com/linux/shell_programming.html
+                http://www.panix.com/~elflord/unix/bash-tute.html
+                http://tldp.org/HOWTO/Bash-Prog-Intro-HOWTO.html
+                https://linuxconfig.org/bash-scripting-tutorial-for-beginners
+                https://en.wikibooks.org/wiki/Bash_Shell_Scripting#Shell_arithmetic
+                http://matt.might.net/articles/bash-by-example/
+                http://tldp.org/LDP/Bash-Beginners-Guide/html/
+            </section>
+            <section>
+                <h4>sysfs and procfs</h4>
+                https://www.kernel.org/doc/Documentation/gpio/sysfs.txt
+                https://en.wikipedia.org/wiki/Sysfs
+                http://kroah.com/log/blog/2013/06/26/how-to-create-a-sysfs-file-correctly/
+                https://en.wikipedia.org/wiki/Procfs
+                https://kernelnewbies.org/Documents/Kernel-Docbooks?action=AttachFile&do=get&target=procfs-guide_2.6.29.pdf
+            </section>
+            <section>
+                <h4>File system</h4>
+                https://en.wikipedia.org/wiki/File_system_permissions#Traditional_Unix_permissions
+                http://jlk.fjfi.cvut.cz/arch/manpages/man/file-hierarchy.7
+                https://en.wikipedia.org/wiki/Filesystem_Hierarchy_Standard
+            </section>
         </section>
       </div>
     </div>
