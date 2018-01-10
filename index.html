@@ -49,6 +49,7 @@
                 - Unix philosophy
                 - File system overview
                 - Using the terminal
+                - Shell scripts
                 - Embedded development
                 - References
             </textarea>
@@ -66,7 +67,7 @@
             </section>
             <section>
                 <h3>OS Market Share</h3>
-                <div id="all-os_combined-ww-monthly-201612-201712"></div><p class="caption">Source: <a href="http://gs.statcounter.com/os-market-share">StatCounter Global Stats - OS Market Share</a></p><script type="text/javascript" src="https://www.statcounter.com/js/fusioncharts.js"></script><script type="text/javascript" src="https://gs.statcounter.com/chart.php?all-os_combined-ww-monthly-201612-201712&chartWidth=600"></script>
+                <div id="all-os_combined-ww-monthly-201612-201712"></div><sub>Source: <a href="http://gs.statcounter.com/os-market-share">StatCounter Global Stats - OS Market Share</a></sub><script type="text/javascript" src="https://www.statcounter.com/js/fusioncharts.js"></script><script type="text/javascript" src="https://gs.statcounter.com/chart.php?all-os_combined-ww-monthly-201612-201712&chartWidth=600"></script>
             </section>
             <section>
                 <h3>Top 500 Supercomputers</h3>
@@ -83,6 +84,398 @@
             </section>
             <section data-background-image="images/Unix_timeline.en.svg" data-background-size="contain">
             </section>
+        </section>
+        <section>
+            <section>
+                <h2>Unix Philosophy</h2>
+            </section>
+            <section data-markdown>
+                <textarea data-template>
+                    #### Simplicity, Minimalism, and Composability
+                    - Write programs that do one thing and do it well.
+                    - Write programs to work together.
+                    - Write programs to handle text streams, because that is a universal interface.
+                    - Small is beautiful.
+                    - Build a prototype as soon as possible.
+                    - Choose portability over efficiency.
+                    - Store data in flat text files.
+                </textarea>
+            </section>
+            <section data-markdown>
+                <textarea data-template>
+                    ### everything is a file (descriptor)
+                    - most resources are exposed as a stream of bytes
+                    - this allows common tools to operate on different things
+                    - most configuration is contained in plain text files
+                    - hardware and system properties can be exposed in the filesystem
+                </textarea>
+            </section>
+        </section>
+        <section>
+            <section>
+                <h2>File System Overview</h2>
+            </section>
+            <section>
+                <h3>Permissions</h3>
+                <br/>
+                <div class="flexbox-container">
+                    <div>
+                        <b>classes:</b>
+                        <br/>
+                        <ul>
+                            <li>user</li>
+                            <li>group</li>
+                            <li>other</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <b>modes:</b>
+                        <br/>
+                        <ul>
+                            <li>read</li>
+                            <li>write</li>
+                            <li>execute</li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+            <section>
+                <h3>File System Hierarchy</h3>
+                <img src="" />
+            </section>
+            <section data-markdown>
+                <textarea data-template>
+                    | directory 	| purpose 																|
+                    |---------------|-----------------------------------------------------------------------|
+                    |/				| file system root 														|
+                    |/boot			| boot loader files														|
+                    |/etc			| system-specifc config files											|
+                    |/home			| user home directories (personal files, settings)						|
+                    |/root 			| root user home directory												|
+                    |/tmp			| small temporary files (typically flushed at boot) 					|
+                    |/run			| tmpfs file system for system packages to place runtime data in 		|
+                </textarea>
+            </section>
+            <section data-markdown>
+                <textarea data-template>
+                    | directory 	| purpose 																|
+                    |---------------|-----------------------------------------------------------------------|
+                    |/usr			| read-only user data													|
+                    |/usr/bin  		| binaries and executables												|
+                    |/usr/lib		| libraries for binaries												|
+                    |/usr/include	| C/C++ header files 													|
+                    |/usr/share		| shared resources (documentation, fonts, themes, etc)					|
+                    |/usr/local		| third-party packages (user-installed programs, etc.)					|
+                </textarea>
+            </section>
+            <section data-markdown>
+                <textarea data-template>
+                    | directory 	| purpose 																|
+                    |---------------|-----------------------------------------------------------------------|
+                    |/bin			| essential binaries (symlinked to /usr/bin in systems using systemd)	|
+                    |/sbin			| essential system binaries (symlinked to /usr/bin in systemd)			|
+                    |/usr/sbin		| non-essential system binaries (symlinked to /usr/bin in systemd)		|
+                    |/lib			| libraries for essential binarires (symlinked to /usr/lib in systemd)	|
+                </textarea>
+            </section>
+            <section data-markdown>
+                <textarea data-template>
+                    | directory 	| purpose 																|
+                    |---------------|-----------------------------------------------------------------------|
+                    |/var			| persistant, variable system data										|
+                    |/var/log		| persistant system logs												|
+                    |/var/tmp		| large temporary files													|
+                    |/dev			| root directory for device nodes										|
+                    |/proc			| virtual kernel file system exposing the process list					|
+                    |/proc/sys		| exposes kernel tunables												|
+                    |/sys			| virutal kernel file system exposing discovered devices/drivers 		|
+                </textarea>
+            </section>
+            <section data-markdown>
+                <textarea data-template>
+                    | directory 	| purpose 																|
+                    |---------------|-----------------------------------------------------------------------|
+                    |~				| alias for /home/*current_user*										|
+                    |~/.config		| user application configuration										|
+                    |/opt			| optional packages (same purpose as /usr/local)						|
+                    |/media			| temporary mount directory for removable devices						|
+                    |/mnt			| temporary mount directory for file systems							|
+                </textarea>
+            </section>
+        </section>
+        <section>
+            <section>
+                <h2>Using the Terminal</h2>
+            </section>
+            <section data-markdown>
+                <textarea data-template>
+                    ### navigating directories
+                    - **cd** : change directory
+                    - **ls** : list files and directories
+                    - **pwd** : print current directory
+                </textarea>
+            </section>
+            <section data-markdown>
+                <textarea data-template>
+                    ### working with files and directories
+                    - **touch** : change file timestamps (can be used to create a blank file)
+                    - **cat** : concatenate files and print on stdout
+                    - **mkdir** : make a directory
+                    - **mv** : move files and directories
+                    - **cp** : copy files
+                    - **less** : paginate files
+                    - **tail** : get end of file
+                    - **head** : get beginning of file
+                    - **find** : find files and directories
+                    - **grep** : print lines matching a pattern (global regular expression print)
+                    - **rm** : remove a files and directories
+                </textarea>
+            </section>
+            <section data-markdown>
+                <textarea data-template>
+                    ### changing ownership and permissions
+                    - **chown** : change owner
+                    - **chmod** : change mode bits
+                </textarea>
+            </section>
+            <section data-markdown>
+                <textarea data-template>
+                    ### working with processes
+                    - **ps** : snapshot of the current processes
+                    - **top** or **htop** : process viewer
+                    - **kill** : terminate a process (typically by process ID)
+                    - **killall** : terminate a process by name
+                </textarea>
+            </section>
+            <section data-markdown>
+                <textarea data-template>
+                    ### viewing logs
+                    - **dmesg** : display the kernel message buffer
+                    - **journalctl** : display systemd journals
+                    - cat log files in /var/log
+                </textarea>
+            </section>
+            <section data-markdown>
+                <textarea data-template>
+                    ### I/O redirection
+                    - **\>**          : redirect stdout to a file
+                    - **\>>**         : append stdout to a file
+                    - **2>** and **2>>**  : redirect stderr
+                    - **&>** and **&>>**  : redirect stdout and stderr
+                    - **<**           : accept input from a file
+                    - **\`command\`** : command substituion. use output of one command in another
+                    - **<< EOF**      : read from a string literal, using a here document, until EOF
+                </textarea>
+            </section>
+            <section data-markdown>
+                <textarea data-template>
+                    ### pipes
+
+                    Pipes connect the stdout of one process to the stdin of another.
+
+                    **|** is pipe symbol.
+
+                    ```bash
+                    dmesg | grep ACPI
+                    ```
+
+                    ```bash
+                    cat words | tr " " "\n" | sort
+                    ```
+
+                    ```bash
+                    ps -aux | grep process_name
+                    ```
+                </textarea>
+            </section>
+            <section data-markdown>
+                <textarea data-template>
+                    ### aliases
+                    Replaces a word by another string. They can be used to abbreviate commands.
+                    ```bash
+                    alias ll="ls -l"
+                    ```
+                </textarea>
+            </section>
+            <section data-markdown>
+                <textarea data-template>
+                    ### environment variables
+                    Just like other languages, shell has variables.
+
+                    Environment variables affect the current environment and how processes are run.
+
+                    ```bash
+                    export PATH=$PATH:/opt/bin
+                    ```
+
+                    ```bash
+                    RUST_BACKTRACE=1 ./test
+                    ```
+                </textarea>
+            </section>
+            <section data-markdown>
+                <textarea data-template>
+                    ### process control
+                    - command **&** : run command in the background
+                    - command1 **&&** command2 : run command1, then run command2 if command1 exited without error
+                </textarea>
+            </section>
+            <section data-markdown>
+                <textarea data-template>
+                    ### getting help
+                    #### a.k.a RTFM
+                    - -h or --help
+                    	- some tools only have one or the other
+                    - man pages
+                </textarea>
+            </section>
+        </section>
+        <section>
+            <section>
+                <h2>Shell Scripts</h2>
+            </section>
+            <section data-markdown>
+                <textarea data-template>
+                    ### Automation
+                    We can put a bunch of shell commands into a script!
+                    - The script must start with "#!/bin/sh" or "#!/bin/bash" "#!/bin/zsh" etc...
+                    - The script needs to be executable:
+                    ```bash
+                    chmod +x script.sh
+                    ```
+                    - Execute in the normal way:
+                    ```bash
+                    ./script.sh
+                    ```
+                </textarea>
+            </section>
+            <section data-markdown>
+                <textarea data-template>
+                    ### Examples
+
+                    hello, world
+                    ```bash
+                    #!/bin/sh
+                    echo "hello, world!'
+                    ```
+
+                    we can use variables
+                    ```bash
+                    #!/bin/sh
+
+                    NUM_CATS=`grep -o cat words | wc -w`
+                    NUM_DOGS=`grep -o dog words | wc -w`
+                    NUM_CATDOGS=`grep -o catdog words | wc -w`
+
+                    echo "I found $NUM_CATS cats and $NUM_DOGS dogs."
+                    echo "That equals $((NUM_CATS + NUM_DOGS)) cats and dogs."
+                    echo "I found $NUM_CATDOGS catdogs!"
+                    ```
+                </textarea>
+            </section>
+            <section data-markdown>
+                <textarea data-template>
+                    ### if statements
+                    if statements are pretty similar to any other language. Unforunately, tests return 0 for true and 1 for false.
+                    ```bash
+                    #!/bin/bash
+
+                    if [[ test condition ]] ; then
+                        echo "if"
+                    elif [[ test condition ]] ; then
+                        echo "elif"
+                    else
+                        echo "else"
+                    fi
+                    ```
+                </textarea>
+            </section>
+            <section data-markdown>
+                <textarea data-template>
+                    ### for loops
+                    general syntax
+                    ```bash
+                    for expr; do
+                    	echo "do something"
+                    done
+                    ```
+                    using glob patterns
+                    ```bash
+                    for file in *.txt ; do
+                      mv "$file" "$file.bak"
+                    done
+                    ```
+                    using ranges
+                    ```bash
+                    for i in {0.10}
+                    do
+                    	echo $i
+                    done
+                    ```
+                </textarea>
+            </section>
+            <section data-markdown>
+                <textarea data-template>
+                    ### while loops
+                    ```bash
+                    #!/bin/bash
+                    X=0
+                    while [ $X -le 10 ]
+                    do
+                    	echo $X
+                    	X=$((X+1))
+                    done
+                    ```
+                </textarea>
+            </section>
+        </section>
+        <section>
+            <section>
+                <h2>Embedded Development</h2>
+            </section>
+            <section data-markdown>
+                <textarea data-template>
+                    ### Writing SD Card Images
+                    You can use dd to write sd card images, among other things.
+                    ```bash
+                    dd if=image of=/dev/sdx bs=4M status=progress && sync
+                    ```
+                    Sync is typically used to make sure any cached writes are synchronized to the storage.
+                </textarea>
+            </section>
+            <section data-markdown>
+                <textarea data-template>
+                    #### controlling hardware through the /sys interface
+                    Because most hardware devices can be exposed through the /sys virtual file system, we can probe and control our hardware with simple shell commands!
+
+                    This isn't always the best way to accomplish a task, but it's simple.
+
+                    Ex:
+                    ```bash
+                    echo 0 > /sys/class/leds/hps_led0/brightness
+                    echo 1 > /sys/class/leds/hps_led0/brightness
+                    ```
+                </textarea>
+            </section>
+        </section>
+        <section>
+            <h2>References</h2>
+        </section>
+        <section>
+            <h4>shell scripting</h4>
+            https://arachnoid.com/linux/shell_programming.html
+            http://www.panix.com/~elflord/unix/bash-tute.html
+            http://tldp.org/HOWTO/Bash-Prog-Intro-HOWTO.html
+            https://linuxconfig.org/bash-scripting-tutorial-for-beginners
+            https://en.wikibooks.org/wiki/Bash_Shell_Scripting#Shell_arithmetic
+            http://matt.might.net/articles/bash-by-example/
+            http://tldp.org/LDP/Bash-Beginners-Guide/html/
+        </section>
+        <section>
+            <h4>sysfs and procfs</h4>
+        </section>
+        <section>
+            <h4>Directories</h4>
         </section>
       </div>
     </div>
