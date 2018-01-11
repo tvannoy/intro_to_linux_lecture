@@ -26,11 +26,6 @@
   <body>
     <div class="reveal">
       <div class="slides">
-        <section id="qrcode" data-menu-title="QR code">
-          <div class="qrcode" id="qrcode-talk"></div>
-          <p><a href="https://tvannoy.github.io/intro_to_linux_lecture" target="_blank"
-                id="talk">https://tvannoy.github.io/intro_to_linux_lecture</a></p>
-        </section>
         <section id="title" data-markdown>
             <textarea data-template>
                 ## Intro To Linux
@@ -212,14 +207,62 @@
             </section>
             <section data-markdown>
                 <textarea data-template>
+                    #### Examples
+
+                    move to a subdirectory of the current dirctory
+                    ```bash
+                    cd dir1
+                    ```
+
+                    move up a directory
+                    ```bash
+                    cd ../
+                    ```
+                    use long listing format
+                    ```bash
+                    ls -l
+                    ```
+
+                    include hidden entries
+                    ```bash
+                    ls -a
+                    ```
+                </textarea>
+            </section>
+            <section data-markdown>
+                <textarea data-template>
                     ### working with files and directories
                     - **mkdir** : make a directory
                     - **rm** : remove a files and directories
                     - **mv** : move files and directories
                     - **cp** : copy files
                     - **touch** : change file timestamps (can be used to create a blank file)
-                    - **echo** : echo a string to stdout
                     - **find** : find files and directories
+                </textarea>
+            </section>
+            <section data-markdown>
+                <textarea data-template>
+                    #### Examples
+
+                    remove directories and files recursively, including empty directories
+                    ```bash
+                    rm -rf
+                    ```
+
+                    copy a directory recursively
+                    ```bash
+                    cp -R
+                    ```
+
+                    move files using wildcards
+                    ```bash
+                    mv *.c src/
+                    ```
+
+                    find files containing a string, starting from the current directory
+                    ```bash
+                    find . -iname '*foo*' -type f
+                    ```
                 </textarea>
             </section>
             <section data-markdown>
@@ -235,9 +278,54 @@
             </section>
             <section data-markdown>
                 <textarea data-template>
+                    #### Examples
+
+                    recursively search for a string in a directory
+                    ```bash
+                    grep -r foobar .
+                    ```
+
+                    print line numbers where a string was found
+                    ```bash
+                    grep -n foobar file
+                    ```
+
+                    search using Perl regular expressions
+                    ```bash
+                    grep -P '\w[a-z]l{1,2}' *
+                    ```
+                </textarea>
+            </section>
+            <section data-markdown>
+                <textarea data-template>
                     ### changing ownership and permissions
                     - **chown** : change owner
                     - **chmod** : change mode bits
+                </textarea>
+            </section>
+            <section data-markdown>
+                <textarea data-template>
+                    #### Examples
+
+                    change user and group of a file
+                    ```bash
+                    chwon new_user:new_group file
+                    ```
+
+                    add exectute permissions to everybody
+                    ```bash
+                    chmod +x file
+                    ```
+
+                    set permissions to (rwx, rx, rx) for (user, group, other)
+                    ```bash
+                    chmod 755 file
+                    ```
+
+                    set permissions to (rw, r, r) for (user, group, other)
+                    ```bash
+                    chmod 644 file
+                    ```
                 </textarea>
             </section>
             <section data-markdown>
@@ -251,10 +339,30 @@
             </section>
             <section data-markdown>
                 <textarea data-template>
+                    #### Examples
+
+                    view all processes from all users
+                    ```bash
+                    ps aux
+                    ```
+                </textarea>
+            </section>
+            <section data-markdown>
+                <textarea data-template>
                     ### viewing logs
                     - **dmesg** : display the kernel message buffer
                     - **journalctl** : display systemd journals
                     - cat log files in /var/log
+                </textarea>
+            </section>
+            <section data-markdown>
+                <textarea data-template>
+                    #### Examples
+
+                    show errors from current boot
+                    ```bash
+                    journalctl -p err -b
+                    ```
                 </textarea>
             </section>
             <section data-markdown>
@@ -271,14 +379,46 @@
             </section>
             <section data-markdown>
                 <textarea data-template>
+                    #### Examples
+
+                    create a signle-line file
+                    ```bash
+                    echo 'some text' > some_file
+                    ```
+
+                    create a multi-line file
+                    ```bash
+                    cat >> file1 << EOF
+                    Culpa est in repellat inventore veniam.
+                    Id totam dolorem consectetur voluptates
+                    EOF
+                    ```
+
+                    append program output to a file
+                    ```bash
+                    ./a.out >> output_file
+                    ```
+
+                    remove files whose filenames are in a file
+                    ```bash
+                    rm `cat filenames`
+                    ```
+                </textarea>
+            </section>
+            <section data-markdown>
+                <textarea data-template>
                     ### pipes
 
                     Pipes connect the stdout of one process to the stdin of another.
 
-                    **|** is pipe symbol.
+                    **|** is the pipe symbol.
 
                     ```bash
                     dmesg | grep ACPI
+                    ```
+
+                    ```bash
+                    dmesg | tail
                     ```
 
                     ```bash
@@ -286,7 +426,7 @@
                     ```
 
                     ```bash
-                    ps -aux | grep process_name
+                    ps aux | grep process_name
                     ```
                 </textarea>
             </section>
@@ -296,7 +436,10 @@
                     Replaces a word by another string. They can be used to abbreviate commands.
                     ```bash
                     alias ll="ls -l"
+                    alias dog=cat
                     ```
+
+                    They need to be put in a config file (e.g. ~/.bashrc, ~/.zshrc) to be persistant.
                 </textarea>
             </section>
             <section data-markdown>
@@ -320,6 +463,11 @@
                     ### process control
                     - command **&** : run command in the background
                     - command1 **&&** command2 : run command1, then run command2 if command1 exited without error
+
+                    Ex:
+                    ```bash
+                    ./long_script.sh &
+                    ```
                 </textarea>
             </section>
             <section data-markdown>
@@ -329,6 +477,14 @@
                     - -h or --help
                     	- some tools only have one or the other
                     - man pages
+
+                    Ex:
+                    ```bash
+                    cp --help
+                    ```
+                    ```bash
+                    man mv
+                    ```
                 </textarea>
             </section>
         </section>
@@ -409,7 +565,7 @@
                     ```
                     using ranges
                     ```bash
-                    for i in {0.10}
+                    for i in {0..10}
                     do
                     	echo $i
                     done
