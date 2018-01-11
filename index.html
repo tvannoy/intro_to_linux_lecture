@@ -26,6 +26,65 @@
   <body>
     <div class="reveal">
       <div class="slides">
+        <section id="title" data-markdown>
+            <textarea data-template>
+                ## Intro To Linux
+                **A Crash Course on Using the Best OS Ever Invented**
+                ***
+                Trevor Vannoy
+
+                EELE 466 | Jan. 10, 2018
+            </textarea>
+        </section>
+        <section id="outline" data-markdown>
+            <textarea data-template>
+                ## Outline
+                - What is Linux and who uses it?
+                - History
+                - Unix philosophy
+                - File system overview
+                - Using the terminal
+                - Shell scripts
+                - Embedded development
+                - References
+            </textarea>
+        </section>
+        <section>
+            <section>
+                <h2>What is Linux and who uses it?</h2>
+            </section>
+            <section data-background-image="images/linux_collage.svg" data-background-size="contain">
+            </section>
+            <section>
+                <h3>OS Market Share</h3>
+                    <img src="images/St<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <title></title>
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+
+    <!-- reveal.js CSS theme and local overrides -->
+    <link rel="stylesheet" href="reveal.js/css/reveal.css"/>
+    <link rel="stylesheet" href="reveal.js/css/theme/white.css" id="theme"/>
+    <link rel="stylesheet" href="css/reveal-override.css"/>
+    <link rel="stylesheet" href="css/custom.css"/>
+
+    <!-- For syntax highlighting -->
+    <link rel="stylesheet" href="highlight.js/src/styles/github.css" />
+
+    <!-- For JavaScript-generated QR codes -->
+    <link rel="stylesheet" href="css/qrcode.css" />
+
+    <!-- If the query includes 'print-pdf', use the PDF print sheet -->
+    <script>
+      document.write( '<link rel="stylesheet" href="reveal.js/css/print/' + ( window.location.search.match( /print-pdf/gi ) ? 'pdf' : 'paper' ) + '.css" type="text/css" media="print">' );
+    </script>
+  </head>
+  <body>
+    <div class="reveal">
+      <div class="slides">
         <section id="qrcode" data-menu-title="QR code">
           <div class="qrcode" id="qrcode-talk"></div>
           <p><a href="https://tvannoy.github.io/intro_to_linux_lecture" target="_blank"
@@ -330,6 +389,544 @@
                     - -h or --help
                     	- some tools only have one or the other
                     - man pages
+                </textarea>
+            </section>
+        </section>
+        <section>
+            <section>
+                <h2>Shell Scripts</h2>
+            </section>
+            <section data-markdown>
+                <textarea data-template>
+                    ### Automation
+                    We can put a bunch of shell commands into a script!
+                    - The script must start with "#!/bin/sh" or "#!/bin/bash" "#!/bin/zsh" etc...
+                    - The script needs to be executable:
+                    ```bash
+                    chmod +x script.sh
+                    ```
+                    - Execute in the normal way:
+                    ```bash
+                    ./script.sh
+                    ```
+                </textarea>
+            </section>
+            <section data-markdown>
+                <textarea data-template>
+                    ### Examples
+
+                    hello, world
+                    ```bash
+                    #!/bin/sh
+                    echo "hello, world!'
+                    ```
+
+                    we can use variables
+                    ```bash
+                    #!/bin/sh
+
+                    NUM_CATS=`grep -o cat words | wc -w`
+                    NUM_DOGS=`grep -o dog words | wc -w`
+                    NUM_CATDOGS=`grep -o catdog words | wc -w`
+
+                    echo "I found $NUM_CATS cats and $NUM_DOGS dogs."
+                    echo "That equals $((NUM_CATS + NUM_DOGS)) cats and dogs."
+                    echo "I found $NUM_CATDOGS catdogs!"
+                    ```
+                </textarea>
+            </section>
+            <section data-markdown>
+                <textarea data-template>
+                    ### if statements
+                    if statements are pretty similar to any other language. Unforunately, tests return 0 for true and 1 for false.
+                    ```bash
+                    #!/bin/bash
+
+                    if [[ test condition ]] ; then
+                        echo "if"
+                    elif [[ test condition ]] ; then
+                        echo "elif"
+                    else
+                        echo "else"
+                    fi
+                    ```
+                </textarea>
+            </section>
+            <section data-markdown>
+                <textarea data-template>
+                    ### for loops
+                    general syntax
+                    ```bash
+                    for expr; do
+                    	echo "do something"
+                    done
+                    ```
+                    using glob patterns
+                    ```bash
+                    for file in *.txt ; do
+                      mv "$file" "$file.bak"
+                    done
+                    ```
+                    using ranges
+                    ```bash
+                    for i in {0..10}
+                    do
+                    	echo $i
+                    done
+                    ```
+                </textarea>
+            </section>
+            <section data-markdown>
+                <textarea data-template>
+                    ### while loops
+                    ```bash
+                    #!/bin/bash
+                    X=0
+                    while [ $X -le 10 ]
+                    do
+                    	echo $X
+                    	X=$((X+1))
+                    done
+                    ```
+                </textarea>
+            </section>
+        </section>
+        <section>
+            <section>
+                <h2>Embedded Development</h2>
+            </section>
+            <section data-markdown>
+                <textarea data-template>
+                    ### Writing SD Card Images
+                    You can use dd to write sd card images, among other things.
+                    ```bash
+                    dd if=image of=/dev/sdx bs=4M status=progress && sync
+                    ```
+                    Sync is typically used to make sure any cached writes are synchronized to the storage.
+                </textarea>
+            </section>
+            <section data-markdown>
+                <textarea data-template>
+                    #### controlling hardware through the /sys interface
+                    Because most hardware devices can be exposed through the /sys virtual file system, we can probe and control our hardware with simple shell commands!
+
+                    This isn't always the best way to accomplish a task, but it's simple.
+
+                    Ex:
+                    ```bash
+                    echo 0 > /sys/class/leds/hps_led0/brightness
+                    echo 1 > /sys/class/leds/hps_led0/brightness
+                    ```
+                </textarea>
+            </section>
+        </section>
+        <section>
+            <section>
+                <h2>References</h2>
+            </section>
+            <section>
+                <h4>shell scripting</h4>
+                https://arachnoid.com/linux/shell_programming.html
+                http://www.panix.com/~elflord/unix/bash-tute.html
+                http://tldp.org/HOWTO/Bash-Prog-Intro-HOWTO.html
+                https://linuxconfig.org/bash-scripting-tutorial-for-beginners
+                https://en.wikibooks.org/wiki/Bash_Shell_Scripting#Shell_arithmetic
+                http://matt.might.net/articles/bash-by-example/
+                http://tldp.org/LDP/Bash-Beginners-Guide/html/
+            </section>
+            <section>
+                <h4>sysfs and procfs</h4>
+                https://www.kernel.org/doc/Documentation/gpio/sysfs.txt
+                https://en.wikipedia.org/wiki/Sysfs
+                http://kroah.com/log/blog/2013/06/26/how-to-create-a-sysfs-file-correctly/
+                https://en.wikipedia.org/wiki/Procfs
+                https://kernelnewbies.org/Documents/Kernel-Docbooks?action=AttachFile&do=get&target=procfs-guide_2.6.29.pdf
+            </section>
+            <section>
+                <h4>File system</h4>
+                https://en.wikipedia.org/wiki/File_system_permissions#Traditional_Unix_permissions
+                http://jlk.fjfi.cvut.cz/arch/manpages/man/file-hierarchy.7
+                https://en.wikipedia.org/wiki/Filesystem_Hierarchy_Standard
+            </section>
+        </section>
+      </div>
+    </div>
+
+    <script src="qrcodejs/qrcode.js"></script>
+    <script>
+/* Grab all links and iterate over them */
+var sources = document.getElementsByTagName('a');
+n = sources.length;
+for (var i = 0; i < n; i++) {
+    var source = sources[i];
+    var href = source.href;
+
+    /* If the link has no href attribute, skip it */
+    if (href) {
+        var target_id = "qrcode-" + source.id ;
+        var target = document.getElementById(target_id);
+        /* If the source has no corresponding target element, skip
+         * it */
+        if (target) {
+            var qr = new QRCode(target, {
+                width : 500,
+                height : 500,
+                colorDark : "#000000",
+                colorLight : "rgba(255,255,255,0)",
+            });
+            qr.makeCode(href);
+        }
+    }
+}
+    </script>
+
+    <script src="reveal.js/lib/js/head.min.js"></script>
+    <script src="reveal.js/js/reveal.js"></script>
+
+    <script>
+// Full list of configuration options available here:
+// https://github.com/hakimel/reveal.js#configuration
+Reveal.initialize({
+    controls: false,
+    progress: false,
+    history: true,
+    center: true,
+
+    theme: Reveal.getQueryHash().theme, // available themes are in /css/theme
+    transition: Reveal.getQueryHash().transition || 'fade', // default/cube/page/concave/zoom/linear/fade/none
+
+    menu: {
+        themes: false,
+        transitions: false,
+        openButton: false,
+        openSlideNumber: true,
+        markers: true
+    },
+
+    keyboard: {
+         40: 'next',
+         38: 'prev'
+    },
+
+    multiplex: {
+        secret: null,
+        id: 'insert-id-here',
+        url: 'https://reveal-js-multiplex-ccjbegmaii.now.sh'
+    },
+
+    // Optional libraries used to extend on reveal.js
+    dependencies: [
+        { src: 'reveal.js/lib/js/classList.js', condition: function() { return !document.body.classList; } },
+        { src: 'reveal.js/plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+        { src: 'reveal.js/plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+        { src: 'reveal.js/plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
+        { src: 'reveal.js/plugin/zoom-js/zoom.js', async: true, condition: function() { return !!document.body.classList; } },
+        { src: 'reveal.js/plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } },
+        { src: '//cdn.socket.io/socket.io-1.3.5.js', async: true },
+        { src: 'reveal.js/plugin/multiplex/master.js', async: true },
+        { src: 'reveal.js-menu/menu.js', async: true, condition: function() { return !!document.body.classList; } },
+    ]
+});
+
+      // If we wanted mouse clicks to advance to next / previous slides, this is
+      // how we'd do it:
+
+      // window.addEventListener("mousedown", handleClick, false);
+      // window.addEventListener("contextmenu", function(e) { e.preventDefault(); }, false);
+      function handleClick(e) {
+          e.preventDefault();
+          if(e.button === 0) Reveal.next();
+          // if(e.button === 2) Reveal.prev();
+      }
+    </script>
+  </body>
+</html>
+atCounter-os_combined-ww-monthly-201612-201712.png" />
+            </section>
+            <section>
+                <h3>Top 500 Supercomputers</h3>
+                <img src="images/Operating_systems_used_on_top_500_supercomputers.svg" />
+            </section>
+            <section>
+                <h3>Embedded Space</h3>
+                <img src="images/VDC-embedded-open-source-market.jpg" />
+            </section>
+        </section>
+        <section>
+            <section>
+                <h1>History</h1>
+            </section>
+            <section data-background-image="images/Unix_timeline.en.svg" data-background-size="contain">
+            </section>
+        </section>
+        <section>
+            <section>
+                <h2>Unix Philosophy</h2>
+            </section>
+            <section data-markdown>
+                <textarea data-template>
+                    #### Simplicity, Minimalism, and Composability
+                    - Write programs that do one thing and do it well.
+                    - Write programs to work together.
+                    - Write programs to handle text streams, because that is a universal interface.
+                    - Small is beautiful.
+                    - Build a prototype as soon as possible.
+                    - Choose portability over efficiency.
+                    - Store data in flat text files.
+                </textarea>
+            </section>
+            <section data-markdown>
+                <textarea data-template>
+                    ### everything is a file (descriptor)
+                    - most resources are exposed as a stream of bytes
+                    - this allows common tools to operate on different things
+                    - most configuration is contained in plain text files
+                    - hardware and system properties can be exposed in the filesystem
+                </textarea>
+            </section>
+        </section>
+        <section>
+            <section>
+                <h2>File System Overview</h2>
+            </section>
+            <section>
+                <h3>Permissions</h3>
+                <br/>
+                <div class="flexbox-container">
+                    <div>
+                        <b>classes:</b>
+                        <br/>
+                        <ul>
+                            <li>user</li>
+                            <li>group</li>
+                            <li>other</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <b>modes:</b>
+                        <br/>
+                        <ul>
+                            <li>read</li>
+                            <li>write</li>
+                            <li>execute</li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+            <section>
+                <h3>File System Hierarchy</h3>
+                <img src="images/dir_tree.svg" height="80%" style="height:80%;"/>
+            </section>
+            <section data-markdown>
+                <textarea data-template>
+                    | directory 	| purpose 																|
+                    |---------------|-----------------------------------------------------------------------|
+                    |/				| file system root 														|
+                    |/boot			| boot loader files														|
+                    |/etc			| system-specifc config files											|
+                    |/home			| user home directories (personal files, settings)						|
+                    |/root 			| root user home directory												|
+                    |/tmp			| small temporary files (typically flushed at boot) 					|
+                    |/run			| tmpfs file system for system packages to place runtime data in 		|
+                </textarea>
+            </section>
+            <section data-markdown>
+                <textarea data-template>
+                    | directory 	| purpose 																|
+                    |---------------|-----------------------------------------------------------------------|
+                    |/usr			| read-only user data													|
+                    |/usr/bin  		| binaries and executables												|
+                    |/usr/lib		| libraries for binaries												|
+                    |/usr/include	| C/C++ header files 													|
+                    |/usr/share		| shared resources (documentation, fonts, themes, etc)					|
+                    |/usr/local		| third-party packages (user-installed programs, etc.)					|
+                </textarea>
+            </section>
+            <section data-markdown>
+                <textarea data-template>
+                    | directory 	| purpose 																|
+                    |---------------|-----------------------------------------------------------------------|
+                    |/bin			| essential binaries (symlinked to /usr/bin in systems using systemd)	|
+                    |/sbin			| essential system binaries (symlinked to /usr/bin in systemd)			|
+                    |/usr/sbin		| non-essential system binaries (symlinked to /usr/bin in systemd)		|
+                    |/lib			| libraries for essential binarires (symlinked to /usr/lib in systemd)	|
+                </textarea>
+            </section>
+            <section data-markdown>
+                <textarea data-template>
+                    | directory 	| purpose 																|
+                    |---------------|-----------------------------------------------------------------------|
+                    |/var			| persistant, variable system data										|
+                    |/var/log		| persistant system logs												|
+                    |/var/tmp		| large temporary files													|
+                    |/dev			| root directory for device nodes										|
+                    |/proc			| virtual kernel file system exposing the process list					|
+                    |/proc/sys		| exposes kernel tunables												|
+                    |/sys			| virutal kernel file system exposing discovered devices/drivers 		|
+                </textarea>
+            </section>
+            <section data-markdown>
+                <textarea data-template>
+                    | directory 	| purpose 																|
+                    |---------------|-----------------------------------------------------------------------|
+                    |~				| alias for /home/*current_user*										|
+                    |~/.config		| user application configuration										|
+                    |/opt			| optional packages (same purpose as /usr/local)						|
+                    |/media			| temporary mount directory for removable devices						|
+                    |/mnt			| temporary mount directory for file systems							|
+                </textarea>
+            </section>
+        </section>
+        <section>
+            <section>
+                <h2>Using the Terminal</h2>
+            </section>
+            <section data-markdown>
+                <textarea data-template>
+                    ### navigating directories
+                    - **cd** : change directory
+                    - **ls** : list files and directories
+                    - **pwd** : print current directory
+                </textarea>
+            </section>
+            <section data-markdown>
+                <textarea data-template>
+                    ### working with files and directories
+                    - **mkdir** : make a directory
+                    - **rm** : remove a files and directories
+                    - **mv** : move files and directories
+                    - **cp** : copy files
+                    - **touch** : change file timestamps (can be used to create a blank file)
+                    - **find** : find files and directories
+                </textarea>
+            </section>
+            <section data-markdown>
+                <textarea data-template>
+                    ### data manipulation
+                    - **echo** : echo a string to stdout
+                    - **cat** : concatenate files and print on stdout
+                    - **less** : paginate files
+                    - **tail** : get end of file
+                    - **head** : get beginning of file
+                    - **grep** : print lines matching a pattern (**g**lobal **r**egular **e**xpression **p**rint)
+                </textarea>
+            </section>
+            <section data-markdown>
+                <textarea data-template>
+                    ### changing ownership and permissions
+                    - **chown** : change owner
+                    - **chmod** : change mode bits
+                </textarea>
+            </section>
+            <section data-markdown>
+                <textarea data-template>
+                    ### working with processes
+                    - **ps** : snapshot of the current processes
+                    - **top** or **htop** : process viewer
+                    - **kill** : terminate a process (typically by process ID)
+                    - **killall** : terminate a process by name
+                </textarea>
+            </section>
+            <section data-markdown>
+                <textarea data-template>
+                    ### viewing logs
+                    - **dmesg** : display the kernel message buffer
+                    - **journalctl** : display systemd journals
+                    - cat log files in /var/log
+                </textarea>
+            </section>
+            <section data-markdown>
+                <textarea data-template>
+                    ### I/O redirection
+                    - **\>**          : redirect stdout to a file
+                    - **\>>**         : append stdout to a file
+                    - **2>** and **2>>**  : redirect stderr
+                    - **&>** and **&>>**  : redirect stdout and stderr
+                    - **<**           : accept input from a file
+                    - **\`command\`** : command substituion. use output of one command in another
+                    - **<< EOF**      : read from a string literal, using a here document, until EOF
+                </textarea>
+            </section>
+            <section data-markdown>
+                <textarea data-template>
+                    ### pipes
+
+                    Pipes connect the stdout of one process to the stdin of another.
+
+                    **|** is the pipe symbol.
+
+                    ```bash
+                    dmesg | grep ACPI
+                    ```
+
+                    ```bash
+                    dmesg | tail
+                    ```
+
+                    ```bash
+                    cat words | tr " " "\n" | sort
+                    ```
+
+                    ```bash
+                    ps aux | grep process_name
+                    ```
+                </textarea>
+            </section>
+            <section data-markdown>
+                <textarea data-template>
+                    ### aliases
+                    Replaces a word by another string. They can be used to abbreviate commands.
+                    ```bash
+                    alias ll="ls -l"
+                    alias dog=cat
+                    ```
+
+                    They need to be put in a config file (e.g. ~/.bashrc, ~/.zshrc) to be persistant.
+                </textarea>
+            </section>
+            <section data-markdown>
+                <textarea data-template>
+                    ### environment variables
+                    Just like other languages, shell has variables.
+
+                    Environment variables affect the current environment and how processes are run.
+
+                    ```bash
+                    export PATH=$PATH:/opt/bin
+                    ```
+
+                    ```bash
+                    RUST_BACKTRACE=1 ./test
+                    ```
+                </textarea>
+            </section>
+            <section data-markdown>
+                <textarea data-template>
+                    ### process control
+                    - command **&** : run command in the background
+                    - command1 **&&** command2 : run command1, then run command2 if command1 exited without error
+
+                    Ex:
+                    ```bash
+                    ./long_script.sh &
+                    ```
+                </textarea>
+            </section>
+            <section data-markdown>
+                <textarea data-template>
+                    ### getting help
+                    #### a.k.a RTFM
+                    - -h or --help
+                    	- some tools only have one or the other
+                    - man pages
+
+                    Ex:
+                    ```bash
+                    cp --help
+                    ```
+                    ```bash
+                    man mv
+                    ```
                 </textarea>
             </section>
         </section>
