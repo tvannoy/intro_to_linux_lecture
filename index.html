@@ -218,7 +218,6 @@
                     - **mv** : move files and directories
                     - **cp** : copy files
                     - **touch** : change file timestamps (can be used to create a blank file)
-                    - **echo** : echo a string to stdout
                     - **find** : find files and directories
                 </textarea>
             </section>
@@ -275,7 +274,7 @@
 
                     Pipes connect the stdout of one process to the stdin of another.
 
-                    **|** is pipe symbol.
+                    **|** is the pipe symbol.
 
                     ```bash
                     dmesg | grep ACPI
@@ -286,7 +285,7 @@
                     ```
 
                     ```bash
-                    ps -aux | grep process_name
+                    ps aux | grep process_name
                     ```
                 </textarea>
             </section>
@@ -297,6 +296,8 @@
                     ```bash
                     alias ll="ls -l"
                     ```
+
+                    They need to be put in a config file (e.g. ~/.bashrc, ~/.zshrc) to be persistant.
                 </textarea>
             </section>
             <section data-markdown>
@@ -409,7 +410,7 @@
                     ```
                     using ranges
                     ```bash
-                    for i in {0.10}
+                    for i in {0..10}
                     do
                     	echo $i
                     done
